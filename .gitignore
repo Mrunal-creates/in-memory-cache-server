@@ -1,24 +1,13 @@
-# Virtual Environment
 venv/
-.env
-
-# Python Cache
 __pycache__/
 *.pyc
 
-# Logs
+cache.db
+
 logs/
 *.log
 
-# SQLite Database
-cache.db
+.env
 
-# VS Code
+.idea/
 .vscode/
-
-# OS Files
-.DS_Store
-Thumbs.db
-
-# Test Cache
-.pytest_cache/

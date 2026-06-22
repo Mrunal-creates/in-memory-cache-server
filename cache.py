@@ -25,15 +25,41 @@ class Cache:
 
         self.misses = 0
 
+        self.start_time = time.time()
+
         self.evictions = 0
 
         self.expired_keys = 0
 
         self.database_hits = 0
 
+        self.total_requests = 0
+
+        self.load_cache_from_database()
+
+    def load_cache_from_database(self):
+
+        rows = self.database.load_all_valid_keys()
+
+        for key, value, expiry in rows:
+
+            self.store[key] = {
+                "value": value,
+                "expiry": expiry
+            }
+
+            if expiry is not None:
+
+                heapq.heappush(
+                    self.expiry_heap,
+                    (expiry, key)
+                )
+
     def set(self, key, value, ttl=None):
 
         with self.lock:
+
+            self.total_requests += 1
 
             expiry = None
 
@@ -53,7 +79,7 @@ class Cache:
                 "expiry": expiry
             }
 
-            self.database.save(key, value)
+            self.database.save(key, value, expiry)
 
             logger.info(f"SET Key={key}")
 
@@ -69,14 +95,11 @@ class Cache:
 
         with self.lock:
 
+            self.total_requests += 1
+
             data = self.store.get(key)
 
             if data is None:
-
-                logger.info(f"CACHE MISS Key={key}")
-
-                self.misses += 1
-
                 db_value = self.database.get(key)
 
                 if db_value is not None:
@@ -90,6 +113,8 @@ class Cache:
 
                     return db_value
 
+                self.misses += 1
+
                 return None
 
             expiry = data["expiry"]
@@ -97,6 +122,10 @@ class Cache:
             if expiry is not None and time.time() > expiry:
 
                 del self.store[key]
+
+                self.database.delete(key)
+
+                self.expired_keys += 1
 
                 return None
 
@@ -113,6 +142,8 @@ class Cache:
         logger.info(f"DELETE Key={key}")
 
         with self.lock:
+
+            self.total_requests += 1
 
             if key in self.store:
 
@@ -142,3 +173,58 @@ class Cache:
 
                 "capacity": self.capacity
             }
+
+    def get_hit_ratio(self):
+
+        total = self.hits + self.misses
+
+        if total == 0:
+            return 0
+
+        return round(
+            (self.hits / total) * 100,
+            2
+        )
+
+    def get_metrics(self):
+
+        uptime = int(
+            time.time() - self.start_time
+        )
+
+        hours = uptime // 3600
+
+        minutes = (
+            uptime % 3600
+        ) // 60
+
+        seconds = uptime % 60
+
+        uptime_text = (
+            f"{hours}h "
+            f"{minutes}m "
+            f"{seconds}s"
+        )
+
+        return {
+
+            "uptime": uptime_text,
+
+            "total_requests": self.total_requests,
+
+            "hit_ratio": self.get_hit_ratio(),
+
+            "hits": self.hits,
+
+            "misses": self.misses,
+
+            "database_hits": self.database_hits,
+
+            "evictions": self.evictions,
+
+            "expired_keys": self.expired_keys,
+
+            "current_size": len(self.store),
+
+            "capacity": self.capacity
+        }

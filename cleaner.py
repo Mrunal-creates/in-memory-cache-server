@@ -45,6 +45,8 @@ class Cleaner:
                         )
                         del self.cache.store[key]
 
+                        self.cache.database.delete(key)
+
                         self.cache.expired_keys += 1
 
             time.sleep(1)

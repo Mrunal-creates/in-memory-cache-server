@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    background: #f4f6f9;
+
+    font-family: "Segoe UI", sans-serif;
+
+    color: #2c3e50;
+}
+
+.container {
+
+    width: 95%;
+
+    max-width: 1400px;
+
+    margin: 30px auto;
+}
+
+.header {
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 20px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+}
+
+.header h1 {
+
+    font-size: 34px;
+}
+
+.header p {
+
+    color: #777;
+
+    margin-top: 10px;
+}
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 20px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+}
+
+.metrics-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit,
+        minmax(220px, 1fr));
+
+    gap: 20px;
+}
+
+.metric-box {
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #6366f1
+    );
+
+    color: white;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    text-align: center;
+}
+
+.metric-box h3 {
+
+    font-size: 18px;
+}
+
+.metric-box p {
+
+    font-size: 36px;
+
+    font-weight: bold;
+
+    margin-top: 15px;
+}
+
+.form-group {
+
+    margin-bottom: 20px;
+}
+
+label {
+
+    font-weight: 600;
+
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+input {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+    font-size: 15px;
+}
+
+button {
+
+    background: #4f46e5;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 24px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+}
+
+button:hover {
+
+    opacity: 0.9;
+}
+
+.status-online {
+
+    color: green;
+
+    font-weight: bold;
+}
+
+.status-offline {
+
+    color: red;
+
+    font-weight: bold;
+}
+
+hr {
+
+    margin: 25px 0;
+}
+
+canvas {
+
+    margin-top: 20px;
+
+    max-height: 350px;
+}

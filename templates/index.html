@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Cache Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>
+                In-Memory Cache Server
+            </h1>
+
+            <p>
+                Redis-Inspired Backend Platform
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>
+                Server Status
+            </h2>
+
+            <h3 id="status">
+                Loading...
+            </h3>
+
+        </div>
+
+        <div class="card">
+
+            <h2>
+                Cache Metrics
+            </h2>
+
+            <div class="metrics-grid">
+
+                <div class="metric-box">
+                    <h3>Hits</h3>
+                    <p id="hits">0</p>
+                </div>
+
+                <div class="metric-box">
+                    <h3>Misses</h3>
+                    <p id="misses">0</p>
+                </div>
+
+                <div class="metric-box">
+                    <h3>Hit Ratio</h3>
+                    <p id="hit_ratio">0%</p>
+                </div>
+
+                <div class="metric-box">
+                    <h3>Current Size</h3>
+                    <p id="current_size">0</p>
+                </div>
+
+                <div class="metric-box">
+                    <h3>Capacity</h3>
+                    <p id="capacity">0</p>
+                </div>
+
+                <div class="metric-box">
+                    <h3>Uptime</h3>
+                    <p id="uptime">0</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="card">
+
+         <div class="card">
+
+        <h2>
+            Cache Analytics
+        </h2>
+
+        <canvas
+            id="hitsMissesChart"
+        ></canvas>
+
+    </div>
+
+
+    <h2>Cache Operations</h2>
+
+    <div class="form-group">
+
+        <label>Key</label>
+
+        <input
+            type="text"
+            id="set_key"
+        >
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Value</label>
+
+        <input
+            type="text"
+            id="set_value"
+        >
+
+    </div>
+
+    <div class="form-group">
+
+        <label>TTL (seconds)</label>
+
+        <input
+            type="number"
+            id="set_ttl"
+        >
+
+    </div>
+
+    <button onclick="setValue()">
+        SET
+    </button>
+
+    <hr>
+
+    <div class="form-group">
+
+        <label>Get Key</label>
+
+        <input
+            type="text"
+            id="get_key"
+        >
+
+    </div>
+
+    <button onclick="getValue()">
+        GET
+    </button>
+
+    <p id="get_result"></p>
+
+    <hr>
+
+    <div class="form-group">
+
+        <label>Delete Key</label>
+
+        <input
+            type="text"
+            id="delete_key"
+        >
+
+    </div>
+
+    <button onclick="deleteValue()">
+        DELETE
+    </button>
+
+    <p id="delete_result"></p>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>       
+
+    <script src="/static/app.js"></script>
+
+</body>
+
+</html>
